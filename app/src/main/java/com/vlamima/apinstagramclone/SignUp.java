@@ -3,6 +3,7 @@ package com.vlamima.apinstagramclone;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -77,7 +78,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         btnTransition = findViewById(R.id.btnNextActivity);
         btnTransition.setOnClickListener(view -> {
-
+            Intent intent = new Intent(SignUp.this, SignUpLoginActivity.class);
+            startActivity(intent);
         });
     }
 
