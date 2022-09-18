@@ -1,23 +1,35 @@
 package com.vlamima.apinstagramclone;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.shashank.sony.fancytoastlib.FancyToast;
+
+import java.util.List;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnSave;
     private EditText edtName, edtPunchSpeed, edtPunchPower, edtKickSpeed, edtKickPower;
+    private TextView txtGetData;
+    private Button getAll;
+    private String allKickBoxers;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +43,34 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         edtPunchPower = findViewById(R.id.edtPunchPower);
         edtKickSpeed = findViewById(R.id.edtKickSpeed);
         edtKickPower = findViewById(R.id.edtKickPower);
+
+        txtGetData = findViewById(R.id.txtGetData);
+        txtGetData.setOnClickListener(v -> {
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("KickBoxer");
+            parseQuery.getInBackground("prgRAuSXDD", (object, e) -> {
+                if (object != null && e == null) {
+                    txtGetData.setText("Name: " + object.get("name") + "\n" +
+                            "Punch power: " + object.get("punchPower") + "\n" +
+                            "Kick power: " + object.get("kickPower"));
+                }
+            });
+        });
+
+        getAll = findViewById(R.id.btnGetAll);
+        getAll.setOnClickListener(v -> {
+            ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("KickBoxer");
+            queryAll.findInBackground((objects, e) -> {
+                if (e == null) {
+                    if (!objects.isEmpty()) {
+                        String message = objects.stream().map(o -> o.get("name").toString()).reduce("",
+                                (s1, s2) -> s1 + '\n' + s2);
+                        FancyToast.makeText(SignUp.this, message, FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+                    }
+                } else {
+                    FancyToast.makeText(SignUp.this, e.getMessage(), FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                }
+            });
+        });
     }
 
     @Override

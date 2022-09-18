@@ -7,8 +7,9 @@
     tools:context=".SignUp">
 
     <androidx.gridlayout.widget.GridLayout
-        android:layout_width="289dp"
-        android:layout_height="486dp"
+        android:id="@+id/gridLayout"
+        android:layout_width="283dp"
+        android:layout_height="398dp"
         android:layout_marginTop="20dp"
         android:clipChildren="false"
         app:columnCount="1"
@@ -94,4 +95,33 @@
             app:layout_row="5"
             app:layout_rowWeight="1" />
     </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/txtGetData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="cursive"
+        android:text="Get data from server"
+        android:textAlignment="center"
+        android:textColor="#FF5722"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+    <Button
+        android:id="@+id/btnGetAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="158dp"
+        android:backgroundTint="#FFEB3B"
+        android:text="Get all"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGetData" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
