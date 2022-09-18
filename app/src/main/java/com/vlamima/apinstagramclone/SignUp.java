@@ -54,7 +54,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         btnLogIn.setOnClickListener(this);
 
         if (ParseUser.getCurrentUser() != null) {
-            ParseUser.logOut();
+            transitionToSocialMediaActivity();
         }
     }
 
@@ -89,6 +89,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                appUser.getUsername() + " is signed in",
                                FancyToast.LENGTH_SHORT,
                                FancyToast.SUCCESS, false).show();
+                       transitionToSocialMediaActivity();
+
                    } else {
                        FancyToast.makeText(SignUp.this,
                                "There was an error: " + e.getMessage(),
@@ -115,5 +117,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void transitionToSocialMediaActivity() {
+        Intent intent = new Intent(this, SocialMediaActivity.class);
+        startActivity(intent);
     }
 }
