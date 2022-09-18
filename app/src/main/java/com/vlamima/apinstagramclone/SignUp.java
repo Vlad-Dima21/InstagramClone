@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -102,6 +103,17 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(SignUp.this, LogInActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public void rootLayoutTapped(View view) {
+        try {
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

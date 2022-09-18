@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_row="4"
     android:background="@drawable/instagram_gradient_log_in"
+    android:onClick="rootLayoutTapped"
     tools:context=".LogInActivity">
 
     <ImageView
