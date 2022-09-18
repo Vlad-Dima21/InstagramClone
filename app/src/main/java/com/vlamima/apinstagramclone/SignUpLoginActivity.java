@@ -1,5 +1,6 @@
 package com.vlamima.apinstagramclone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,9 @@ public class SignUpLoginActivity extends AppCompatActivity {
                             FancyToast.makeText(SignUpLoginActivity.this,
                                     user.getUsername() + " logged in!", FancyToast.LENGTH_SHORT,
                                     FancyToast.SUCCESS, false).show();
+
+                            Intent intent = new Intent(SignUpLoginActivity.this, WelcomeActivity.class);
+                            startActivity(intent);
                         } else {
                             FancyToast.makeText(SignUpLoginActivity.this,
                                     "Log in failed!\nCause: " + e.getMessage(), FancyToast.LENGTH_LONG,
@@ -52,11 +56,14 @@ public class SignUpLoginActivity extends AppCompatActivity {
                 if (e == null) {
                     FancyToast.makeText(SignUpLoginActivity.this,
                             "Account created!", FancyToast.LENGTH_SHORT,
-                            FancyToast.SUCCESS, false );
+                            FancyToast.SUCCESS, false).show();
+
+                    Intent intent = new Intent(SignUpLoginActivity.this, WelcomeActivity.class);
+                    startActivity(intent);
                 } else {
                     FancyToast.makeText(SignUpLoginActivity.this,
                             "Sign up failed!\nerror: " + e.getMessage(), FancyToast.LENGTH_LONG,
-                            FancyToast.ERROR, false );
+                            FancyToast.ERROR, false).show();
                 }
             });
         });
