@@ -28,6 +28,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private TextView txtGetData;
     private Button getAll;
     private String allKickBoxers;
+    private Button btnTransition;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -59,6 +60,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         getAll = findViewById(R.id.btnGetAll);
         getAll.setOnClickListener(v -> {
             ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("KickBoxer");
+            queryAll.whereGreaterThanOrEqualTo("punchPower", 10_000);
+            queryAll.setLimit(1);
             queryAll.findInBackground((objects, e) -> {
                 if (e == null) {
                     if (!objects.isEmpty()) {
@@ -70,6 +73,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     FancyToast.makeText(SignUp.this, e.getMessage(), FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 }
             });
+        });
+
+        btnTransition = findViewById(R.id.btnNextActivity);
+        btnTransition.setOnClickListener(view -> {
+
         });
     }
 
