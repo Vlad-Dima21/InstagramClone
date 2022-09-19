@@ -44,11 +44,11 @@ public class ProfileTab extends Fragment {
 
         ParseUser parseUser = ParseUser.getCurrentUser();
 
-        edtProfileName.setText(parseUser.get("profileName") == null ? parseUser.get("profileName").toString() : "");
-        edtProfileBio.setText(parseUser.get("profileBio") == null ? parseUser.get("profileBio").toString() : "");
-        edtProfileProfession.setText(parseUser.get("profileProfession") == null ? parseUser.get("profileProfession").toString() : "");
-        edtProfileHobbies.setText(parseUser.get("profileBio") == null ? parseUser.get("profileBio").toString() : "");
-        edtProfileSport.setText(parseUser.get("profileSport") == null ? parseUser.get("profileSport").toString() : "");
+        edtProfileName.setText(parseUser.get("profileName") != null ? parseUser.get("profileName").toString() : "");
+        edtProfileBio.setText(parseUser.get("profileBio") != null ? parseUser.get("profileBio").toString() : "");
+        edtProfileProfession.setText(parseUser.get("profileProfession") != null ? parseUser.get("profileProfession").toString() : "");
+        edtProfileHobbies.setText(parseUser.get("profileBio") != null ? parseUser.get("profileBio").toString() : "");
+        edtProfileSport.setText(parseUser.get("profileSport") != null ? parseUser.get("profileSport").toString() : "");
 
         btnUpdate = view.findViewById(R.id.btnUpdateProfileInfo);
         btnUpdate.setOnClickListener(v -> {
