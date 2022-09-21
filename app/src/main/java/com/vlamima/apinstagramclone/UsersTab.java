@@ -1,5 +1,7 @@
 package com.vlamima.apinstagramclone;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -21,8 +24,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class UsersTab extends Fragment implements AdapterView.OnItemClickListener {
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ListView listView;
     private List<String> usersUserName;
@@ -41,6 +43,7 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
 
         listView = view.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 
         TextView txtUsersLoading = view.findViewById(R.id.txtUsersLoading);
 
@@ -69,5 +72,33 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
         Intent intent = new Intent(getContext(), UsersPosts.class);
         intent.putExtra("username", usersUserName.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
+        parseQuery.whereEqualTo("username", usersUserName.get(position));
+        parseQuery.getFirstInBackground((user, e) -> {
+            if (user != null && e == null) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(user.getUsername() + " info")
+                        .setMessage(
+                                "Bio: " + toStringNotNull(user.get("profileBio")) +
+                                "\nProfession: " + toStringNotNull(user.get("profileProfession")) +
+                                "\nHobbies: " + toStringNotNull(user.get("profileHobbies")) +
+                                "\nFavourite sport: " + toStringNotNull(user.get("profileSport")))
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
+        });
+
+        return true;
+    }
+
+    private String toStringNotNull(Object object) {
+        return (object != null ? object.toString() : "n/a");
     }
 }
