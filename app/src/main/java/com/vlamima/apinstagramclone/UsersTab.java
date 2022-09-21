@@ -1,5 +1,6 @@
 package com.vlamima.apinstagramclone;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UsersTab extends Fragment {
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
     private List<String> usersUserName;
@@ -38,6 +40,7 @@ public class UsersTab extends Fragment {
         arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, usersUserName);
 
         listView = view.findViewById(R.id.listView);
+        listView.setOnItemClickListener(this);
 
         TextView txtUsersLoading = view.findViewById(R.id.txtUsersLoading);
 
@@ -59,5 +62,12 @@ public class UsersTab extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getContext(), UsersPosts.class);
+        intent.putExtra("username", usersUserName.get(position));
+        startActivity(intent);
     }
 }
